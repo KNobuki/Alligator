@@ -51,6 +51,10 @@ func updateItemInfo(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	fmt.Fprintf(w, "%sの%sのページ\n", p.ByName("userid"), p.ByName("itemid"))
 }
 
+func loginUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	fmt.Fprintf(w, "%sがログインしました\n", p.ByName("userid"))
+}
+
 func main() {
 
 	mux := httprouter.New()
@@ -66,6 +70,7 @@ func main() {
 	mux.POST("/:userid/:itemid", uploadItem)
 	mux.DELETE("/:userid/:itemid", deleteItem)
 	mux.PUT("/:userid/:itemid", updateItemInfo)
+	mux.POST("/login/:userid", loginUser)
 
 	server := http.Server{
 		Addr:    "127.0.0.1:8080",
